@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado do Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Seu Resultado no Quiz</h1>
+        <p class="resultados-score">Você acertou <strong>{{ score }}</strong> de <strong>{{ total }}</strong> perguntas.</p>
+        <p class="feedback">{{ feedback }}</p>
+
+        <h3>Revisão das Perguntas:</h3>
+        <div class="review-questionario">
+            {% for q in quiz_questionario %}
+                <div class="questionario-review-item">
+                    <p><strong>Q{{ loop.index }}:</strong> {{ q.pergunta }}</p>
+                    <p class="correct-answer">Resposta Correta: {{ q.opcoes | selectattr('startswith', q.resposta) | first }}</p>
+                    <p class="explanation">Explicação: {{ q.explicacao }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button onclick="location.href='{{ url_for('index') }}'">Jogar Novamente</button>
+    </div>
+</body>
+</html>
